@@ -1,6 +1,0 @@
-db.Topics.insert( { Name: "Jenkins" } )
-db.Topics.insert( { Name: "CI/CD" } )
-b.Topics.insert( { Name: "Jenkins" } )
-db.Topics.insert( { Name: "Kubernetes" } )
-db.Topics.insert( { Name: "Docker" } )
-use TopicstoreDb
