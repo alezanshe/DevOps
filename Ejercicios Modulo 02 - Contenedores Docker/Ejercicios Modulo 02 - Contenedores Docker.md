@@ -1,10 +1,8 @@
 # Ejercicios Módulo 02 - Contenedores Docker
 
-Bootcamp Devops Continuo - Modulo-2-Contenedores-Docker-Laboratorio
-
 ### Ejercicio 1
 
-1. Para crear una red en la que los contenedores van a funcionar, hacemos uso del comando `docker network create `mas el nombre de la red que queramos crear
+1. Para crear una red en la que los contenedores van a funcionar, hacemos uso del comando `docker network create ` mas el nombre de la red que queramos crear
 
 ```shell
 $ docker network create lemoncode-challenge
@@ -114,19 +112,24 @@ $ docker run -d -p 27017:27017 -v data:/data/db mongo
 ```
 Esto usará la carpeta data que tenemos en la ruta actual y la mapeará con `/data/db` para que cuando se pare o borremos el contenedor los datos no se pierdan. Si volviesemos a levantar otro contenedor y le mapeáramos este mismo volumen, los datos seguirían estando ahí
 
-6. 
+6. Para inicializar la base de datos de MongoDB que contendrá nuestros datos entraremos en nuestro contenedor MongoDB usando la terminal:
 
 ```shell
 $ docker exec -it some-mongo bash
 ```
 
+Una vez dentro usaremos el comando `mongosh` para operar con la shell de MongoDB e introduciremos los siguientes comandos para:
+
 ```shell
 $ mongosh
 ```
 
+Crear la base de datos `TopicstoreDb`
+
 ```shell
 test> use TopicstoreDb
 ```
+Crear la colección `Topics` e introducir datos
 
 ```shell
 db.Topics.insert( { Name: "Docker" } )
@@ -144,7 +147,7 @@ db.Topics.insert( { Name: "Jenkins" } )
 db.Topics.insert( { Name: "CI/CD" } )
 ```
 
-Si usamos `curl` para ver el contenido de http://localhost:5000/api/topics veremos el contenido de la base de datos
+Una vez hayamos introducido nuestros registros en la base de datos, si usamos `curl` para ver el contenido de http://localhost:5000/api/topics veremos el contenido de la base de datos
 
 ```shell
 $ curl http://localhost:5000/api/topics
