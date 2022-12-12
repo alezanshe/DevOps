@@ -203,6 +203,16 @@ Resultado:
 </html>
 ```
 
+Actualizacion:
+
+Para crear las imagenes `Dockerfile` que después `Docker-Compose` usará para levantarlo todo usaremos el comando:
+
+```shell
+docker build . -t nombreimagen
+```
+
+(El . significa el directorio actual. Si  estuvíesemos en otra ruta bastaría con escribir la ruta absoluta hasta el Dockerfile)
+
 ### Ejercicio 2
 
 Crearemos un `docker-compose.yml` que contendrá toda la configuración antes mencionada y almacenada en los `Dockerfile` tanto del backend como del frontend.
@@ -267,4 +277,10 @@ Para eliminar:
 
 ```shell
 $ docker-compose down
+```
+
+Para eliminar (incluido volúmenes):
+
+```shell
+$ docker-compose down -v
 ```
