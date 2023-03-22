@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Building Containers
+        run: docker-compose build
+      - name: Starting Containers
+        run: docker-compose up -d
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        working-directory: ./hangman-e2e/e2e
+        run: |
+          npm ci
+          npm install
+      - name: Running Tests
+        working-directory: ./hangman-e2e/e2e
+        run: |
+          npm run test
+      - name: Running Cypress
+        working-directory: ./hangman-e2e/e2e
+        run: npx cypress run
+      - name: Stopping Containers
+        run: docker-compose down

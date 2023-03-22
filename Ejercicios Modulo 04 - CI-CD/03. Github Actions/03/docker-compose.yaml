@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  hangman-api:
+    build:
+      context: ./hangman-api
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    networks:
+    - e2e
+  hangman-front:
+    build:
+      context: ./hangman-front
+      dockerfile: Dockerfile
+    environment:
+      API_URL: http://localhost:3001
+    ports:
+      - 8080:8080
+    networks:
+    - e2e
+  cypress:
+    build:
+      context: ./hangman-e2e/e2e
+      dockerfile: cypress-16.dockerfile
+    command: npm run open
+    networks:
+    - e2e
+
+networks:
+  e2e:
