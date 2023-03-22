@@ -1,0 +1,33 @@
+pipeline {
+    agent {
+        docker {
+            image 'gradle:6.6.1-jre14-openj9'
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                sh '''
+                git clone https://github.com/alezanshe/jenkins2.git
+                cd jenkins2/
+                '''
+            }
+        }
+        stage('Compile') {
+            steps {
+                sh '''
+                cd jenkins-resources/calculator/
+                ./gradlew compileJava
+                '''
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                sh '''
+                cd jenkins-resources/calculator/
+                ./gradlew test
+                '''
+            }
+        }
+    }
+}

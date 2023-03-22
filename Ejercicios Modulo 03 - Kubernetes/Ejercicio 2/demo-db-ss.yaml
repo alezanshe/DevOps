@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: demo-db-ss
+spec:
+  selector:
+    matchLabels:
+      app: demo-db-svc
+  serviceName: demo-db-svc
+  replicas: 10
+  template:
+    metadata:
+      labels:
+        app: demo-db-svc
+    spec:
+      containers:
+      - name: demo-db
+        image: alezanshe/todo-app-monolith-db
+        # image: postgres:10.4
+        env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_HOST
+          - name: DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_PASSWORD
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_PORT
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_NAME
+          - name: DB_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: demo-app-cm
+                key: DB_VERSION
+        ports:
+        - containerPort: 5432
+          name: demo-db
+        volumeMounts:
+        - name: demo-db-pvc
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: demo-db-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: demo-db-sc
+      resources:
+        requests:
+          storage: 250Mi

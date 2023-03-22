@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: some-mongo
+    hostname: some-mongo
+    volumes:
+      - ./data:/data/db
+      - ./data/log:/var/mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - lemoncode-challenge
+
+  backend:
+    build: ./backend/
+    restart: always
+    container_name: topics-api
+    hostname: topics-api
+    ports:
+      - "5000:5000"
+    networks:
+      - lemoncode-challenge
+
+  frontend:
+    build: ./frontend/
+    restart: always
+    container_name: frontend
+    hostname: frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - lemoncode-challenge
+
+networks:
+  lemoncode-challenge:

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-front-deployment
+spec:
+  selector:
+    matchLabels:
+      app: todo-front-svc
+  template:
+    metadata:
+      labels:
+        app: todo-front-svc
+    spec:
+      containers:
+      - name: todo-front
+        image: alezanshe/todo-front
+        ports:
+        - containerPort: 80

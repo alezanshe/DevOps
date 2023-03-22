@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-db-cm
+  labels:
+    app: demo-db
+data:
+  DB_HOST: "demo-db-svc"
+  DB_USER: "postgres"
+  DB_PASSWORD: "postgres"
+  DB_PORT: "5432"
+  DB_NAME: "todos_db"
+  DB_VERSION: "10.4"

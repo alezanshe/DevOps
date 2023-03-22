@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                sh '''
+                git clone https://github.com/alezanshe/jenkins1.git
+                cd jenkins1/
+                '''
+            }
+        }
+        stage('Compile') {
+            steps {
+                sh './gradlew compileJava'
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+    }
+}
