@@ -18,13 +18,6 @@ services:
       - 8080:8080
     networks:
     - e2e
-  cypress:
-    build:
-      context: ./hangman-e2e/e2e
-      dockerfile: cypress-16.dockerfile
-    command: npm run open
-    networks:
-    - e2e
 
 networks:
   e2e:

@@ -21,13 +21,7 @@ jobs:
         working-directory: ./hangman-e2e/e2e
         run: |
           npm ci
-          npm install
-      - name: Running Tests
-        working-directory: ./hangman-e2e/e2e
-        run: |
-          npm run test
-      - name: Running Cypress
-        working-directory: ./hangman-e2e/e2e
-        run: npx cypress run
-      - name: Stopping Containers
-        run: docker-compose down
+      - name: Cypress Actions
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: ./hangman-e2e/e2e
