@@ -1,5 +1,6 @@
-# Jenkins 1
+## Jenkins
 
+### 1. CI/CD de una Java + Gradle
 ```
 pipeline {
     agent any
@@ -26,8 +27,7 @@ pipeline {
 }
 ```
 
-# Jenkins 2
-
+### 2. Modificar la pipeline para que utilice la imagen Docker de Gradle como build runner
 ```
 pipeline {
     agent {
@@ -64,7 +64,9 @@ pipeline {
 }
 ```
 
-# Gitlab 1
+## Gitlab
+
+### 1. CI/CD de una aplicación spring
 ```
 stages:
   - maven:build
@@ -108,13 +110,83 @@ deploy:
      - docker run --name "springapp" -d -p 8080:8080 $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA
 ```
 
-# Github Actions 1
+## 2. Crear un usuario nuevo y probar que no puede acceder al proyecto anteriormente creado
+
+## guest
+A continuación se presentan algunas de las acciones que un usuario con rol "Guest" puede realizar en GitLab:
+
+Ver el código fuente y los archivos del proyecto.
+Ver las solicitudes de extracción y los problemas en el proyecto.
+Ver los comentarios en las solicitudes de extracción y los problemas.
+Ver el registro de actividad del proyecto.
+Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
+Crear solicitudes de extracción en un fork del proyecto, pero no pueden hacerlo directamente en el proyecto original.
+Crear problemas en el proyecto.
+
+## reporter
+A continuación se presentan algunas de las acciones que un usuario con rol "Reporter" puede realizar en GitLab:
+
+Ver el código fuente y los archivos del proyecto.
+Ver las solicitudes de extracción y los problemas en el proyecto.
+Ver los comentarios en las solicitudes de extracción y los problemas.
+Ver el registro de actividad del proyecto.
+Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
+Crear solicitudes de extracción en el proyecto.
+Crear problemas en el proyecto.
+Comentar en solicitudes de extracción y problemas.
+Ver los detalles de la configuración del proyecto y las ramas protegidas.
+Ver el contenido de la Wiki del proyecto.
+Ver y descargar los artefactos de construcción de CI/CD.
+
+## developer
+A continuación se presentan algunas de las acciones que un usuario con rol "Developer" puede realizar en GitLab:
+
+Ver y modificar el código fuente y los archivos del proyecto.
+Crear y modificar las solicitudes de extracción en el proyecto.
+Crear y cerrar problemas en el proyecto.
+Comentar en solicitudes de extracción y problemas.
+Ver el registro de actividad del proyecto.
+Ver y descargar los artefactos de construcción de CI/CD.
+Configurar y ejecutar la construcción de CI/CD para el proyecto.
+Acceder a los entornos de producción y de prueba.
+Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
+
+## mantainer
+A continuación se presentan algunas de las acciones que un usuario con rol "Maintainer" puede realizar en GitLab:
+
+Ver y modificar el código fuente y los archivos del proyecto.
+Crear y modificar las solicitudes de extracción en el proyecto.
+Crear y cerrar problemas en el proyecto.
+Comentar en solicitudes de extracción y problemas.
+Ver y descargar los artefactos de construcción de CI/CD.
+Configurar y ejecutar la construcción de CI/CD para el proyecto.
+Acceder a los entornos de producción y de prueba.
+Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
+Aprobar solicitudes de extracción y fusionarlas con el repositorio.
+Crear, modificar y eliminar ramas protegidas.
+Invitar, eliminar y modificar los roles de los miembros del proyecto.
+Crear, modificar y eliminar etiquetas y lanzamientos.
+
+### 3. Crear un nuevo repositorio, que contenga una pipeline, que clone otro proyecto, springapp anteriormente creado. Realizarlo de las siguientes maneras:
+Crear un nuevo repositorio, que contenga una pipeline, que clone otro proyecto, springapp anteriormente creado. Realizarlo de las siguientes maneras:
+Con el método de CI job permissions model
+
+¿Qué ocurre si el repo que estoy clonando no estoy cómo miembro?
+
+No se puede clonar porque es privado por defecto
+
+Con el método deploy keys
+Crear deploy key en el repo springapp y poner solo lectura
+Crear pipeline que usando la deploy key
+
+## GitHub Actions
+
+### 1. Crea un workflow CI para el proyecto de frontend
 ```
 name: CI
 
-on:
-  workflow_dispatch:
-
+on: pull_request
+    
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -134,18 +206,12 @@ jobs:
       - name: Run Tests
         working-directory: ./hangman-front
         run: npm run test
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-code
-          path: hangman-front/dist/
 ```
-# Github Actions 2
+### 2. Crea un workflow CD para el proyecto de frontend
 ```
 name: CI
 
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   build-and-test:
@@ -196,16 +262,8 @@ jobs:
         run: docker push ghcr.io/alezanshe/hangman-front/hangman-front:latest
 ```
 
-## Github Actions 3
+### 3. Crea un workflow que ejecute tests e2e
 ```
-docker build -t hangman-api .
-docker build -t hangman-front .
-docker build -f cypress-16.dockerfile -t cypress .
-docker run -d --rm -p 3001:3000 hangman-api
-docker run -d --rm -p 8080:8080 -e API_URL=http://localhost:3001 hangman-front
-```
-
-
 name: CI
 
 on:
@@ -239,3 +297,4 @@ jobs:
         run: npx cypress run
       - name: Stopping Containers
         run: docker-compose down
+```
