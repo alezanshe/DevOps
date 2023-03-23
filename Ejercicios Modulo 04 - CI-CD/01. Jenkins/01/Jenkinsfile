@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 sh '''
-                git clone https://github.com/alezanshe/jenkins1.git
+                git clone https://github.com/alezanshe/jenkins.git
                 cd jenkins1/
                 '''
             }
