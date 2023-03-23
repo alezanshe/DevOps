@@ -7,16 +7,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh '''
-                git clone https://github.com/alezanshe/jenkins.git
-                cd jenkins2/
-                '''
+                sh 'git clone https://github.com/alezanshe/jenkins.git'
             }
         }
         stage('Compile') {
             steps {
                 sh '''
-                cd jenkins-resources/calculator/
+                cd jenkins/calculator
                 ./gradlew compileJava
                 '''
             }
@@ -24,7 +21,7 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 sh '''
-                cd jenkins-resources/calculator/
+                cd jenkins/calculator
                 ./gradlew test
                 '''
             }
