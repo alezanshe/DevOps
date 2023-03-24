@@ -88,10 +88,10 @@ Tras los tests, `Docker` hará login en los repositorios oficiales, hará la bui
 
 Usando las variables de entorno de Gitlab nos hará que el pipeline esté mas limpio y sin hardcodear nada
 
-El deploy con Docker simplemente hará `docker run` con el nombre que le hayamos dado a nuestra imagen y la tag que se le haya dado y arrancará el contenedor en el puerto 8080 con un mensaje por pantalla.
+El deploy con Docker simplemente hará `docker run` con el nombre que le hayamos dado a nuestra imagen y la tag que se le haya dado y arrancará el contenedor en el puerto 8080 con un mensaje diciendo
 
 ```
-
+"hostname":"f4f0e622a178","ip":"172.17.0.2","message":"Hello World!"
 ```
 
 ```
@@ -139,76 +139,73 @@ deploy:
 
 ## 2. Crear un usuario nuevo y probar que no puede acceder al proyecto anteriormente creado
 
-## guest
-A continuación se presentan algunas de las acciones que un usuario con rol "Guest" puede realizar en GitLab:
+## Guest
+El usuario `Guest` puede:
 
-Ver el código fuente y los archivos del proyecto.
-Ver las solicitudes de extracción y los problemas en el proyecto.
-Ver los comentarios en las solicitudes de extracción y los problemas.
-Ver el registro de actividad del proyecto.
-Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
-Crear solicitudes de extracción en un fork del proyecto, pero no pueden hacerlo directamente en el proyecto original.
-Crear problemas en el proyecto.
+- Ver el código fuente y los archivos del proyecto.
+- Ver las solicitudes de extracción y los problemas en el proyecto.
+- Ver los comentarios en las solicitudes de extracción y los problemas.
+- Ver el registro de actividad del proyecto.
+- Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
+- Crear solicitudes de extracción en un fork del proyecto, pero no pueden hacerlo directamente en el proyecto original.
+- Crear problemas en el proyecto.
 
-## reporter
-A continuación se presentan algunas de las acciones que un usuario con rol "Reporter" puede realizar en GitLab:
+## Reporter
+El usuario `Reporter` puede:
 
-Ver el código fuente y los archivos del proyecto.
-Ver las solicitudes de extracción y los problemas en el proyecto.
-Ver los comentarios en las solicitudes de extracción y los problemas.
-Ver el registro de actividad del proyecto.
-Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
-Crear solicitudes de extracción en el proyecto.
-Crear problemas en el proyecto.
-Comentar en solicitudes de extracción y problemas.
-Ver los detalles de la configuración del proyecto y las ramas protegidas.
-Ver el contenido de la Wiki del proyecto.
-Ver y descargar los artefactos de construcción de CI/CD.
+- Ver el código fuente y los archivos del proyecto.
+- Ver las solicitudes de extracción y los problemas en el proyecto.
+- Ver los comentarios en las solicitudes de extracción y los problemas.
+- Ver el registro de actividad del proyecto.
+- Ver los archivos de registro de la construcción de CI/CD, pero no pueden modificar la configuración de CI/CD.
+- Crear solicitudes de extracción en el proyecto.
+- Crear problemas en el proyecto.
+- Comentar en solicitudes de extracción y problemas.
+- Ver los detalles de la configuración del proyecto y las ramas protegidas.
+- Ver el contenido de la Wiki del proyecto.
+- Ver y descargar los artefactos de construcción de CI/CD.
 
-## developer
-A continuación se presentan algunas de las acciones que un usuario con rol "Developer" puede realizar en GitLab:
+## Developer
+El usuario `Developer` puede:
 
-Ver y modificar el código fuente y los archivos del proyecto.
-Crear y modificar las solicitudes de extracción en el proyecto.
-Crear y cerrar problemas en el proyecto.
-Comentar en solicitudes de extracción y problemas.
-Ver el registro de actividad del proyecto.
-Ver y descargar los artefactos de construcción de CI/CD.
-Configurar y ejecutar la construcción de CI/CD para el proyecto.
-Acceder a los entornos de producción y de prueba.
-Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
+- Ver y modificar el código fuente y los archivos del proyecto.
+- Crear y modificar las solicitudes de extracción en el proyecto.
+- Crear y cerrar problemas en el proyecto.
+- Comentar en solicitudes de extracción y problemas.
+- Ver el registro de actividad del proyecto.
+- Ver y descargar los artefactos de construcción de CI/CD.
+- Configurar y ejecutar la construcción de CI/CD para el proyecto.
+- Acceder a los entornos de producción y de prueba.
+- Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
 
-## mantainer
-A continuación se presentan algunas de las acciones que un usuario con rol "Maintainer" puede realizar en GitLab:
+## Mantainer
+El usuario `Mantainer` puede:
 
-Ver y modificar el código fuente y los archivos del proyecto.
-Crear y modificar las solicitudes de extracción en el proyecto.
-Crear y cerrar problemas en el proyecto.
-Comentar en solicitudes de extracción y problemas.
-Ver y descargar los artefactos de construcción de CI/CD.
-Configurar y ejecutar la construcción de CI/CD para el proyecto.
-Acceder a los entornos de producción y de prueba.
-Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
-Aprobar solicitudes de extracción y fusionarlas con el repositorio.
-Crear, modificar y eliminar ramas protegidas.
-Invitar, eliminar y modificar los roles de los miembros del proyecto.
-Crear, modificar y eliminar etiquetas y lanzamientos.
+- Ver y modificar el código fuente y los archivos del proyecto.
+- Crear y modificar las solicitudes de extracción en el proyecto.
+- Crear y cerrar problemas en el proyecto.
+- Comentar en solicitudes de extracción y problemas.
+- Ver y descargar los artefactos de construcción de CI/CD.
+- Configurar y ejecutar la construcción de CI/CD para el proyecto.
+- Acceder a los entornos de producción y de prueba.
+- Ver y modificar la configuración del proyecto, incluyendo la configuración de CI/CD y las ramas protegidas.
+- Aprobar solicitudes de extracción y fusionarlas con el repositorio.
+- Crear, modificar y eliminar ramas protegidas.
+- Invitar, eliminar y modificar los roles de los miembros del proyecto.
+- Crear, modificar y eliminar etiquetas y lanzamientos.
 
 ### 3. Crear un nuevo repositorio, que contenga una pipeline, que clone otro proyecto, springapp anteriormente creado. Realizarlo de las siguientes maneras:
-Crear un nuevo repositorio, que contenga una pipeline, que clone otro proyecto, springapp anteriormente creado. Realizarlo de las siguientes maneras:
-Con el método de CI job permissions model
 
-¿Qué ocurre si el repo que estoy clonando no estoy cómo miembro?
+__¿Qué ocurre si el repo que estoy clonando no estoy cómo miembro?__
 
 No se puede clonar porque es privado por defecto
-
-Con el método deploy keys
-Crear deploy key en el repo springapp y poner solo lectura
-Crear pipeline que usando la deploy key
 
 ## GitHub Actions
 
 ### 1. Crea un workflow CI para el proyecto de frontend
+
+Este pipeline de Github Actions hará build de nuestra app en NodeJS usando el actions `setup-node` y luego correrá los tests. Este pipeline solo se activará cuando se realice un pull request
+
 ```
 name: CI
 
@@ -235,10 +232,14 @@ jobs:
         run: npm run test
 ```
 ### 2. Crea un workflow CD para el proyecto de frontend
+
+Este pipeline de Github Actions hará exactamente lo mismo que el pipeline anterior solo que se disparará manualmente (usando workflow_dispatch) y hará una build de Docker de un Dockerfile y hará push a los repos de GitHub (ghcr.io). En este paso del pipeline yo lo he hecho manualmente haciendo Docker Login con un Token proporcionado por GitHub que permite interactuar con Packages pero se podría haber realizado todo con el action `build-push-action`
+
 ```
 name: CI
 
-on: push
+on:
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -290,6 +291,36 @@ jobs:
 ```
 
 ### 3. Crea un workflow que ejecute tests e2e
+
+Este pipeline se realizará creando un docker-compose.yaml de todo lo anterior y una vez en el pipeline se haga la build y se levanten los contenedores, el action `cypress-io/github-action@` realizará un escaneo de todo el proyecto y nos dejara un reporte en el pipeline al terminar
+
+docker-compose.yaml
+```
+version: "3.8"
+services:
+  hangman-api:
+    build:
+      context: ./hangman-api
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    networks:
+    - e2e
+  hangman-front:
+    build:
+      context: ./hangman-front
+      dockerfile: Dockerfile
+    environment:
+      API_URL: http://localhost:3001
+    ports:
+      - 8080:8080
+    networks:
+    - e2e
+
+networks:
+  e2e:
+```
+
 ```
 name: CI
 
@@ -314,14 +345,8 @@ jobs:
         working-directory: ./hangman-e2e/e2e
         run: |
           npm ci
-          npm install
-      - name: Running Tests
-        working-directory: ./hangman-e2e/e2e
-        run: |
-          npm run test
-      - name: Running Cypress
-        working-directory: ./hangman-e2e/e2e
-        run: npx cypress run
-      - name: Stopping Containers
-        run: docker-compose down
+      - name: Cypress Actions
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: ./hangman-e2e/e2e
 ```
