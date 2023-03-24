@@ -1,6 +1,9 @@
 ## Jenkins
 
 ### 1. CI/CD de una Java + Gradle
+
+Este pipeline es sencillo ya que básicamente lo que tenemos que hacer es, clonar el repositorio, compilar con Gradle y correr los tests. Gradle viene dentro del directorio así que este pipeline lo podemos correr en Jenkins creando un nuevo proyecto de tipo pipeline y pegandolo directamente en el editor
+
 ```
 pipeline {
     agent any
@@ -8,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 sh '''
-                git clone https://github.com/alezanshe/jenkins1.git
+                git clone https://github.com/alezanshe/jenkins.git
                 cd jenkins1/
                 '''
             }
@@ -28,6 +31,9 @@ pipeline {
 ```
 
 ### 2. Modificar la pipeline para que utilice la imagen Docker de Gradle como build runner
+
+Este pipeline es parecido al anterior solo que usa la imagen de Docker `gradle:6.6.1-jre14-openj9`. Hará lo mismo, clonará el repositorio, compilará con Gradle y correrá los tests con la imagen proporcionada. Para que use Docker, tenemos que haber instalado previamente los plugins de Docker para Jenkins. Para usarlo en local podemos hacer uso de `Dind` o `Docker in Docker`
+
 ```
 pipeline {
     agent {
@@ -38,16 +44,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh '''
-                git clone https://github.com/alezanshe/jenkins2.git
-                cd jenkins2/
-                '''
+                sh 'git clone https://github.com/alezanshe/jenkins.git'
             }
         }
         stage('Compile') {
             steps {
                 sh '''
-                cd jenkins-resources/calculator/
+                cd jenkins/calculator
                 ./gradlew compileJava
                 '''
             }
@@ -55,7 +58,7 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 sh '''
-                cd jenkins-resources/calculator/
+                cd jenkins/calculator
                 ./gradlew test
                 '''
             }
@@ -67,6 +70,30 @@ pipeline {
 ## Gitlab
 
 ### 1. CI/CD de una aplicación spring
+
+Este pipeline en Gitlab se compone de 4 fases:
+
+```
+  - maven:build
+  - maven:test
+  - docker:build
+  - deploy
+```
+
+Para empezar crearemos un repositorio y subiremos el código proporcionado
+
+El pipeline iniciará la build con `Maven`, guardará los artefactos generados, luego correrá los tests a esos artefactos para ver que todo esta correcto. 
+
+Tras los tests, `Docker` hará login en los repositorios oficiales, hará la build y hará push de la imagen a nuestro repositorio de `DockerHub`
+
+Usando las variables de entorno de Gitlab nos hará que el pipeline esté mas limpio y sin hardcodear nada
+
+El deploy con Docker simplemente hará `docker run` con el nombre que le hayamos dado a nuestra imagen y la tag que se le haya dado y arrancará el contenedor en el puerto 8080 con un mensaje por pantalla.
+
+```
+
+```
+
 ```
 stages:
   - maven:build
